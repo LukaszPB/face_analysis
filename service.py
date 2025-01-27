@@ -4,11 +4,11 @@ import cv2
 import numpy as np
 import io
 from PIL import Image
-import dlib
+#import dlib
 
 # Ładowanie modelu do detekcji punktów twarzy
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+# detector = dlib.get_frontal_face_detector()
+# predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 app = Flask(__name__)
 CORS(app)
@@ -29,20 +29,20 @@ def process_image():
     image_gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
 
     # Wykrywanie twarzy
-    faces = detector(image_gray)
+    # faces = detector(image_gray)
 
-    if len(faces) == 0:
-        return {"error": "Face not detected"}, 400
-    if len(faces) > 1:
-        return {"error": f"Too many faces detected: {len(faces)}"}, 400
+    # if len(faces) == 0:
+    #     return {"error": "Face not detected"}, 400
+    # if len(faces) > 1:
+    #     return {"error": f"Too many faces detected: {len(faces)}"}, 400
 
-    for face in faces:
-        landmarks = predictor(image_gray, face)
-        # Rysowanie punktów kluczowych
-        for n in range(0, 68):
-            x = landmarks.part(n).x
-            y = landmarks.part(n).y
-            cv2.circle(image_cv, (x, y), 5, (255, 0, 0), -1)
+    # for face in faces:
+    #     landmarks = predictor(image_gray, face)
+    #     # Rysowanie punktów kluczowych
+    #     for n in range(0, 68):
+    #         x = landmarks.part(n).x
+    #         y = landmarks.part(n).y
+    #         cv2.circle(image_cv, (x, y), 5, (255, 0, 0), -1)
 
     # Konwersja obrazu z powrotem do formatu PIL
     result_image = Image.fromarray(cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB))
